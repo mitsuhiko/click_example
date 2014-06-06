@@ -2,19 +2,21 @@ from __future__ import print_function
 
 import click
 
+pass_dict = click.make_pass_decorator(dict, ensure=True)
+
 @click.group()
 @click.option('-d', '--debug', count=True, help="more debugging stuff")
-@click.pass_context
-def main(ctx, debug):
-    ctx.obj['DEBUG'] = debug
+@pass_dict
+def main(obj, debug):
+    obj['DEBUG'] = debug
 
 @main.command()
-@click.pass_context
 @click.argument('name')
-def hello(ctx, name):
+@pass_dict
+def hello(obj, name):
     """Say hello name
     """
-    if ctx.obj['DEBUG']:
+    if obj['DEBUG']:
         print("Assuming your name is {}...".format(name))
     print("hello {}!".format(name))
 
